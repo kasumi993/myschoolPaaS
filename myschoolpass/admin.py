@@ -1,14 +1,33 @@
 from django.contrib import admin
 from myschoolpass.models import Course, Professor, Student
 
-@admin.register(Course)
 class CourseAdmin(admin.ModelAdmin):
-    list_display = ('title', 'level', 'instructor', 'available_seats', 'expiration_date')
+    list_display = ('title', 'level', 'get_instructors', 'available_seats', 'expiration_date')
+    search_fields = ('title', 'level')
+    list_filter = ('level',)
 
-@admin.register(Professor)
+    def get_instructors(self, obj):
+        return ", ".join([professor.username for professor in obj.instructor.all()])
+    get_instructors.short_description = 'Instructors'
+
 class ProfessorAdmin(admin.ModelAdmin):
-    list_display = ('user',)
+    list_display = ('username', 'first_name', 'last_name', 'email', 'get_courses')
+    search_fields = ('username', 'first_name', 'last_name', 'email')
+    list_filter = ('courses_taught__title',)
 
-@admin.register(Student)
+    def get_courses(self, obj):
+        return ", ".join([course.title for course in obj.courses_taught.all()])
+    get_courses.short_description = 'Courses Taught'
+
 class StudentAdmin(admin.ModelAdmin):
-    list_display = ('user',)
+    list_display = ('username', 'first_name', 'last_name', 'email', 'get_courses')
+    search_fields = ('username', 'first_name', 'last_name', 'email')
+    list_filter = ('courses_enrolled__title',)
+
+    def get_courses(self, obj):
+        return ", ".join([course.title for course in obj.courses_enrolled.all()])
+    get_courses.short_description = 'Courses Enrolled'
+
+admin.site.register(Course, CourseAdmin)
+admin.site.register(Professor, ProfessorAdmin)
+admin.site.register(Student, StudentAdmin)

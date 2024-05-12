@@ -8,8 +8,6 @@ class Course(models.Model):
         ('intermediate', 'Intermediate'),
         ('advanced', 'Advanced'),
     ])
-    instructor = models.ForeignKey('Professor', on_delete=models.CASCADE, related_name='courses_taught')
-    students = models.ManyToManyField('Student', related_name='courses_enrolled', blank=True)
     available_seats = models.PositiveIntegerField(default=0)
     expiration_date = models.DateTimeField(null=True, blank=True)
 
