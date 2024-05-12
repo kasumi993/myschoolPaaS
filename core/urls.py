@@ -20,9 +20,9 @@ from myschoolpass import views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('courses/', views.course_list, name='course_list'),
+    path('', views.welcome, name='index'),
+    path('login/', views.login, name='login'),
     path('courses/<int:course_id>/', views.course_detail, name='course_detail'),
     path('professors/<int:user_id>/', views.professor_profile, name='professor_profile'),
     path('students/<int:user_id>/', views.student_profile, name='student_profile'),
-    path('search/', views.course_search, name='course_search'),
 ]

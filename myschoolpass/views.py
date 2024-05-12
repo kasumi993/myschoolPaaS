@@ -6,6 +6,10 @@ from django.contrib.auth.decorators import login_required
 def login(request):
     return render(request, 'login.html')
 
+# login view
+def welcome(request):
+    return render(request, 'index.html')
+
 # course views
 @login_required
 def course_detail(request, course_id):
