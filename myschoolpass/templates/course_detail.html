@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Course Detail</title>
+    <style>
+        body, html {
+            margin: 0;
+            padding: 0;
+            height: 100%;
+            font-family: 'Roboto', sans-serif;
+            background-color: #2c3e50;
+            color: white;
+        }
+        .container {
+            padding: 20px;
+        }
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background-color: #34495e;
+            padding: 10px 20px;
+            border-bottom: 2px solid #1abc9c;
+        }
+        .header h1 {
+            margin: 0;
+        }
+        .header button {
+            background-color: #e74c3c;
+            color: white;
+            padding: 10px 15px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        .header button:hover {
+            background-color: #c0392b;
+        }
+        .course-info {
+            margin: 20px 0;
+        }
+        .course-info h2 {
+            margin-bottom: 10px;
+        }
+        .course-info p {
+            margin: 5px 0;
+        }
+        .course-students {
+            margin-top: 20px;
+        }
+        .course-students h2 {
+            margin-bottom: 10px;
+        }
+        .student-list {
+            list-style-type: none;
+            padding: 0;
+        }
+        .student-list li {
+            background-color: #34495e;
+            padding: 10px;
+            margin: 5px 0;
+            border-radius: 5px;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <div class="header">
+        <h1>{{ course.title }}</h1>
+        <button onclick="window.history.back()">Back</button>
+    </div>
+    <div class="course-info">
+        <h2>Course Information</h2>
+        <p><strong>Description:</strong> {{ course.description }}</p>
+        <p><strong>Level:</strong> {{ course.level }}</p>
+        <p><strong>Available Seats:</strong> {{ course.available_seats }}</p>
+        <p><strong>Expiration Date:</strong> {{ course.expiration_date }}</p>
+    </div>
+    <div class="course-students">
+        <h2>Enrolled Students</h2>
+        <ul class="student-list">
+            {% for student in course.students.all %}
+            <li>{{ student.user.username }} - {{ student.first_name }} {{ student.last_name }}</li>
+            {% empty %}
+            <li>No students enrolled in this course.</li>
+            {% endfor %}
+        </ul>
+    </div>
+</div>
+</body>
+</html>

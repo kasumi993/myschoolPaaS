@@ -1,11 +1,16 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from .models import Course, Professor, Student
 from django.contrib.auth.decorators import login_required
-from django.contrib.auth import authenticate, login as auth_login
+from django.contrib.auth import authenticate, login as auth_login, logout
 import logging
 
 # Configure logger
 logger = logging.getLogger(__name__)
+
+
+def logout_view(request):
+    logout(request)
+    return redirect('/login/')
 
 # login view
 def login(request):
