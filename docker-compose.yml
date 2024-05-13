@@ -25,6 +25,7 @@ services:
       python manage.py makemigrations &&
       python manage.py migrate &&
       python manage.py create_default_users &&
+      python manage.py create_superuser &&
       python manage.py runserver 0.0.0.0:8000
       "
     volumes:
@@ -36,6 +37,9 @@ services:
       DJANGO_ALLOWED_HOSTS: 'localhost 127.0.0.1'
       CELERY_BROKER: 'redis://redis:6379/0'
       CELERY_BACKEND: 'redis://redis:6379/0'
+      DJANGO_SUPERUSER_USERNAME: 'admin'
+      DJANGO_SUPERUSER_EMAIL: 'admin@example.com'
+      DJANGO_SUPERUSER_PASSWORD: 'admin'
     depends_on:
       - pgdb
       - redis
