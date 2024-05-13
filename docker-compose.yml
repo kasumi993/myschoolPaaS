@@ -44,6 +44,19 @@ services:
       - pgdb
       - redis
 
+  subscriber:
+    build: .
+    container_name: subscriber
+    command: python manage.py run_subscriber
+    environment:
+      DEBUG: '1'
+      DJANGO_ALLOWED_HOSTS: 'localhost 127.0.0.1'
+      CELERY_BROKER_URL: 'redis://redis:6379/0'
+      CELERY_RESULT_BACKEND: 'redis://redis:6379/0'
+    depends_on:
+      - django
+      - redis
+
   celery:
     build: .
     command: celery -A core worker -l INFO

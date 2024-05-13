@@ -98,5 +98,37 @@
         {% endfor %}
     </div>
 </div>
+<div class="container">
+    <div class="main-content">
+        <div class="messages-panel">
+            <h2>Real-Time Updates</h2>
+            <ul id="messages">
+                <!-- Messages will be appended here by JavaScript -->
+            </ul>
+        </div>
+    </div>
+</div>
 </body>
 </html>
+
+<script type="text/javascript">
+    const ws = new WebSocket('ws://' + window.location.host + '/ws/course_updates/');
+
+    ws.onmessage = function(event) {
+        const messageData = JSON.parse(event.data);
+        document.getElementById('messages').innerHTML += `<li>${messageData.message}</li>`;
+    };
+
+    ws.onopen = function(event) {
+        console.log('WebSocket connection opened.');
+    };
+
+    ws.onclose = function(event) {
+        console.log('WebSocket connection closed.');
+    };
+
+    ws.onerror = function(event) {
+        console.error('WebSocket error observed:', event);
+    };
+</script>
+
